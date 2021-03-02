@@ -23,6 +23,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.Type;
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 
@@ -30,6 +31,8 @@ import android.view.Surface;
  * Renderscript-based merger for an HDR viewfinder
  */
 public class ViewfinderProcessor {
+
+    private static final String TAG = "ViewfinderProcessor";
 
     private Allocation mInputHdrAllocation;
     private Allocation mInputNormalAllocation;
@@ -138,6 +141,7 @@ public class ViewfinderProcessor {
             // Get to newest input
             for (int i = 0; i < pendingFrames; i++) {
                 mInputAllocation.ioReceive();
+                Log.i(TAG, "timeStamp: " + mInputAllocation.getTimeStamp());
             }
 
             mHdrMergeScript.set_gFrameCounter(mFrameCounter++);
